@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  background: url("https://res.cloudinary.com/dm8xxyjfx/image/upload/v1667893917/WaysBook/Desain_tanpa_judul_zru6yk.png");
+  background-size: cover;
+  height: 100vh;
+  margin: 0;
 }
 
 .App-logo {
