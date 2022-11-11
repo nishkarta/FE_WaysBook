@@ -1,4 +1,4 @@
-import IncomeEl from "../components/admin/IncomeEl";
+import IncomeEl from "../../components/admin/IncomeEl"
 
 export default function Income() {
     return (

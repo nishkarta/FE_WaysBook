@@ -5,7 +5,7 @@ import { useMutation } from "react-query"
 import { useNavigate } from "react-router-dom"
 import { API } from "../../config/api"
 
-export default function AddBookEl() {
+export default function UpdateBookEl() {
     const navigate = useNavigate()
     // const [state, dispatch] = React.useContext()
 
@@ -31,8 +31,8 @@ export default function AddBookEl() {
         //     let url = URL.createObjectURL(e.target.files[0])
         //     setPreview(url)
         // }
+
     }
-    console.log(form)
 
     const handleSubmit = useMutation(async (e) => {
         try {
@@ -63,7 +63,7 @@ export default function AddBookEl() {
     return (
         <Container className="px-5">
             <Container className="p-5">
-                <h3 className="ff-tns fs-36 fw-bold text-center text-lg-start mb-5">Add Book</h3>
+                <h3 className="ff-tns fs-36 fw-bold text-center text-lg-start mb-5">Update Book</h3>
 
                 <Form onSubmit={(e) => handleSubmit.mutate(e)} className="mb-3">
                     <Form.Group className="mb-4" >
@@ -73,7 +73,7 @@ export default function AddBookEl() {
                     </Form.Group>
                     <Form.Group className="mb-4" >
                         <FloatingLabel label='Publication Date' controlId="floatingInput">
-                            <Form.Control onChange={handleChange} name="publication_date" type="date" placeholder="Publication Date" />
+                            <Form.Control name="publication_date" type="date" placeholder="Publication Date" />
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-4" >
@@ -114,7 +114,7 @@ export default function AddBookEl() {
                         </Col>
                     </Row>
 
-                    <Button type="submit" style={{ backgroundColor: '#393939' }} className="rounded-0 border-0 p-3 float-end">Add Book <i className="fa-solid fa-book"></i></Button>
+                    <Button type="submit" style={{ backgroundColor: '#393939' }} className="rounded-0 border-0 p-3 float-end">Update Book <i className="fa-solid fa-book"></i></Button>
                 </Form>
             </Container>
         </Container>

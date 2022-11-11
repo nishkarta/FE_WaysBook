@@ -31,7 +31,7 @@ export default function CartEl() {
                                             </Col>
                                         </Row>
                                     </Col>
-                                    <Col className="col-3 text-end pe-3"><i class="fa-solid fa-trash"></i></Col>
+                                    <Col className="col-3 text-end pe-3"><i className="fa-solid fa-trash"></i></Col>
 
                                 </Row>
                             ))}

@@ -1,11 +1,18 @@
 import { Container, Row, Col } from "react-bootstrap"
 
-import { books } from "../dummies/books"
 import convertRupiah from 'rupiah-format'
 import { useNavigate } from "react-router-dom"
+import { API } from "../../config/api"
+import { useQuery } from "react-query"
 
 export default function BookLists() {
     const navigate = useNavigate()
+
+    let { data: books } = useQuery('listBooksCache', async () => {
+        const response = await API.get('books')
+        return response.data.data
+    })
+
     return (
         <div className="container-grey py-5 text-center text-lg-start">
             <Container>
@@ -13,14 +20,14 @@ export default function BookLists() {
                 <h1 className="ff-tns fs-36 fw-bold mb-3">Book Lists</h1>
                 <Row className=" d-flex justify-content-start mx-auto">
 
-                    {books.map((book) => (
-                        <Col style={{ width: '205px' }} className="text-start col-12 col-md-6 col-lg-3 text-center me-3 mb-3" key={book.id} onClick={() => navigate(`/detail/${book.id}`, { book })}>
+                    {books?.map((item, index) => (
+                        <Col style={{ width: '205px' }} className="text-start col-12 col-md-6 col-lg-3 text-center me-3 mb-3" key={index} onClick={() => navigate(`/detail/${item?.id}`)}>
                             <div className="">
-                                <img className="mb-3 w-full" src={book.cover} alt="book" style={{ height: '255px', objectFit: 'cover' }} />
+                                <img className="mb-3 w-full" src={item?.cover} alt="book" style={{ height: '255px', objectFit: 'cover' }} />
                                 <div className="w-full">
-                                    <h4 className="ff-tns fw-bold text-start mb-1">{book.title}</h4>
-                                    <p className="text-start fst-italic fs-14 ff-avn text-grey mb-1" style={{ color: '#929292' }}>By {book.author}</p>
-                                    <p className="ff-avn fs-18 text-start fw-bold" style={{ color: '#44B200' }}>{convertRupiah.convert(book.price)}</p>
+                                    <h4 className="ff-tns fw-bold text-start mb-1">{item?.title}</h4>
+                                    <p className="text-start fst-italic fs-14 ff-avn text-grey mb-1" style={{ color: '#929292' }}>By {item?.author}</p>
+                                    <p className="ff-avn fs-18 text-start fw-bold" style={{ color: '#44B200' }}>{convertRupiah.convert(item?.price)}</p>
                                 </div>
 
                             </div>
