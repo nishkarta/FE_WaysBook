@@ -11,6 +11,7 @@ import { API } from "../../config/api";
 
 import LoginEl from "../auth/LoginEl";
 import RegisterEl from "../auth/RegisterEl";
+import AddOrderPopup from '../cart_orders/AddOrderPopup';
 
 import { UserContext } from '../context/userContext';
 
@@ -19,6 +20,8 @@ export default function BookRoll() {
     const navigate = useNavigate()
     const [showLog, setShowLog] = React.useState(false)
     const [showReg, setShowReg] = React.useState(false)
+    const [showAddOrderPopup, setShowAddOrderPopup] = React.useState(false)
+
 
     const [state, dispatch] = React.useContext(UserContext)
 
@@ -38,6 +41,16 @@ export default function BookRoll() {
         return response.data.data
     })
 
+    const addToCartHandler = async (bookId) => {
+        try {
+            const response = await API.post(`cart/add/${bookId}`)
+
+            setShowAddOrderPopup(true)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <div className="linear-grey py-5 py-lg-0 px-5 ">
 
@@ -46,10 +59,10 @@ export default function BookRoll() {
             <Slider {...settings}>
                 {
                     books?.slice(0, 5).map((item, index) => (
-                        <div onClick={state.isLogin ? (() => navigate(`/detail/${item?.id}`)) : (() => setShowLog(true))} className="text-start" style={{ width: '26rem', border: 'none', borderRadius: 0 }} key={index}>
+                        <div className="text-start" style={{ width: '26rem', border: 'none', borderRadius: 0 }} key={index}>
                             <Row>
                                 <Col className="col-12 col-lg-6">
-                                    <Card.Img className="mx-0 px-0" style={{ width: '13rem', height: '18rem', objectFit: "cover", borderRadius: 0 }} alt="book-image" src={item?.cover} />
+                                    <Card.Img onClick={state.isLogin ? (() => navigate(`/detail/${item?.id}`)) : (() => setShowLog(true))} className="mx-0 px-0" style={{ width: '13rem', height: '18rem', objectFit: "cover", borderRadius: 0 }} alt="book-image" src={item?.cover} />
                                 </Col>
 
                                 <Col style={{}} className="px-0 mx-0 d-flex align-items-center">
@@ -63,7 +76,7 @@ export default function BookRoll() {
                                             <span className="ff-avn fs-18" style={{ color: '#44B200' }}>{convertRupiah.convert(item?.price)}</span>
                                             <br />
                                         </Card.Text>
-                                        <Button style={{ borderRadius: 0 }} variant="dark w-100">Add Cart</Button>
+                                        <Button style={{ borderRadius: 0 }} variant="dark w-100" onClick={() => addToCartHandler(item.id)}>Add Cart</Button>
                                     </Card.Body>
                                 </Col>
 
@@ -80,6 +93,8 @@ export default function BookRoll() {
             <LoginEl showLog={showLog} setShowLog={setShowLog} setShowReg={setShowReg} />
 
             <RegisterEl showReg={showReg} setShowReg={setShowReg} setShowLog={setShowLog} />
+
+            <AddOrderPopup showAddOrderPopup={showAddOrderPopup} setShowAddOrderPopup={setShowAddOrderPopup} />
         </div >
     )
 }

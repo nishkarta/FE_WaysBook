@@ -16,17 +16,6 @@ function NavbarEl() {
 
     const [state, dispatch] = React.useContext(UserContext)
 
-    // const [user, setUser] = React.useState(null)
-    // const getUser = async () => {
-    //     try {
-
-    //         const response = await API.get(`/user/${state.user.id}`)
-    //         setUser(response.data.data)
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
-
     let { data: userData, refetch } = useQuery('userDataCache', async () => {
 
         const response = await API.get(`/user/${state.user.id}`)
@@ -53,7 +42,7 @@ function NavbarEl() {
             <Navbar bg="none" expand="lg" >
 
                 <Container fluid >
-                    <Navbar.Brand onClick={() => navigate('/')}><Image src="https://res.cloudinary.com/dm8xxyjfx/image/upload/v1667894655/WaysBook/Frame_1_rpfgpc.png" alt="logo" /></Navbar.Brand>
+                    <Navbar.Brand style={{ cursor: 'pointer' }} onClick={() => navigate('/')}><Image src="https://res.cloudinary.com/dm8xxyjfx/image/upload/v1667894655/WaysBook/Frame_1_rpfgpc.png" alt="logo" /></Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse className='justify-content-end' id="navbarScroll">
 
@@ -67,7 +56,7 @@ function NavbarEl() {
                             }}>Register</Button>
                         </> : state.user.role === 'cust' ? (<div>
                             <Dropdown className='d-flex align-items-center'>
-                                <span onClick={() => navigate("/cart")} >
+                                <span style={{ cursor: 'pointer' }} onClick={() => navigate("/cart")} >
                                     <i className="fa-solid fa-cart-shopping fs-1"></i>
 
                                 </span>

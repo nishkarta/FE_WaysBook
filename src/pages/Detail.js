@@ -17,15 +17,25 @@ export default function Detail({ item }) {
 
     let { data: book } = useQuery("detailCache", async () => {
         const response = await API.get(`book/${params.id}`)
-        console.log(response.data.data)
         return response.data.data
     })
+
+    const addToCartHandler = async (bookId) => {
+        try {
+            const response = await API.post(`cart/add/${bookId}`)
+
+            setShowAddOrderPopup(true)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <>
             <>
                 <DetailHead book={book} />
                 <DetailAbout book={book} />
-                <Button variant='dark' className="float-end mx-5" onClick={() => setShowAddOrderPopup(true)}>Add to Cart<i className="fa-solid fa-cart-shopping"></i></Button>
+                <Button variant='dark' className="float-end mx-5" onClick={() => addToCartHandler(params.id)}>Add to Cart<i className="fa-solid fa-cart-shopping"></i></Button>
             </>
 
             <AddOrderPopup showAddOrderPopup={showAddOrderPopup} setShowAddOrderPopup={setShowAddOrderPopup} />
