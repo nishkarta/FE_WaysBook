@@ -10,7 +10,7 @@ export default function DetailHead(props) {
                 </Col>
                 <Col className='col-12 col-lg-6 text-center text-lg-start'>
                     <h1 className='fs-48 ff-tns fw-bold'>{props.book?.title}</h1>
-                    <p className="ff-avn fs-24 fst-italic text-grey mb-5" style={{ color: '#929292' }}>{props.book?.author}</p>
+                    <p className="ff-avn fs-24 fst-italic text-grey mb-5" style={{ color: '#929292' }}>By {props.book?.author}</p>
                     <h3 className="ff-avn fs-24 fw-bold">Publication date</h3>
                     <p className="ff-avn fs-18 " style={{ color: '#929292' }}>{props.book?.publication_date}</p>
                     <h3 className="ff-avn fs-24 fw-bold">Pages</h3>

@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { Container, Table, Image, Button } from "react-bootstrap"
 import { useQuery } from "react-query"
 import { API } from "../../config/api"
@@ -6,10 +7,15 @@ import { useNavigate } from "react-router-dom"
 
 export default function UploadedBooksEl() {
     const navigate = useNavigate()
-    let { data: books } = useQuery('uploadedBooksCache', async () => {
+
+    let { data: books, refetch } = useQuery('uploadedBooksCache', async () => {
         const response = await API.get('/books-latest')
         return response.data.data
     })
+
+    React.useEffect(() => {
+        refetch()
+    }, [])
 
     return (
         <Container className="p-5">
@@ -23,7 +29,7 @@ export default function UploadedBooksEl() {
                         <th>Item</th>
                         <th>Title</th>
                         <th>Price</th>
-                        <th>Description</th>
+                        <th>Detail</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -32,13 +38,16 @@ export default function UploadedBooksEl() {
                         <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{item?.id}</td>
-                            <td><Image style={{ height: '100px', objectFit: 'cover' }} src={item?.cover} alt="book" /></td>
+                            <td><Image style={{ height: '100px', width: '70px', objectFit: 'cover' }} src={item?.cover} alt="book" /></td>
                             <td>{item?.title}</td>
                             <td>{convertRupiah.convert(item?.price)}</td>
-                            <td>{item?.about}</td>
+                            <td><Button onClick={() => navigate(`/detail/${item?.id}`)} className="fw-bold" variant="outline-success">Detail</Button></td>
                             <td>
                                 <Button onClick={() => navigate(`/update-book/${item.id}`)} variant="dark" className="fw-bold me-2">Update</Button>
-                                <Button variant="danger" className="fw-bold">Delete</Button>
+                                <Button onClick={async () => {
+                                    const response = await API.delete(`/book/${item.id}`);
+                                    refetch()
+                                }} variant="danger" className="fw-bold">Delete</Button>
                             </td>
                         </tr>
                     ))}

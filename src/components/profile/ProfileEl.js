@@ -29,32 +29,32 @@ export default function ProfileEl() {
                 <Row style={{ backgroundColor: '#FFD9D9', borderRadius: '8px', padding: '25px', margin: '10px' }}>
                     <Col>
                         <Row className="text-start d-flex align-items-center mb-2">
-                            <Col className="col-1"> <p><i className="fa-solid fa-envelope" style={{ color: '#8A8C90', fontSize: '2rem' }}></i></p></Col>
-                            <Col className="col-11">
+                            <Col className="col-1 me-1"> <p><i className="fa-solid fa-envelope" style={{ color: '#8A8C90', fontSize: '2rem' }}></i></p></Col>
+                            <Col className="col-10">
                                 <p className="ff-avn fs-14 fw-bold m-0">{user?.email ? user?.email : "No Email Has Been Registered"}</p>
                                 <p className="fs-12" style={{ color: '#8A8C90' }}>Email</p>
 
                             </Col>
                         </Row>
                         <Row className="text-start d-flex align-items-center mb-2">
-                            <Col className="col-1"> <p><i className="fa-solid fa-venus-mars" style={{ color: '#8A8C90', fontSize: '2rem' }}></i></p></Col>
-                            <Col className="col-11">
+                            <Col className="col-1 me-1"> <p><i className="fa-solid fa-venus-mars" style={{ color: '#8A8C90', fontSize: '2rem' }}></i></p></Col>
+                            <Col className="col-10">
                                 <p className="ff-avn fs-14 fw-bold m-0">{user?.gender ? user?.gender : "unknown"}</p>
                                 <p className="fs-12" style={{ color: '#8A8C90' }}>Gender</p>
 
                             </Col>
                         </Row>
                         <Row className="text-start d-flex align-items-center mb-2">
-                            <Col className="col-1"> <p><i className="fa-solid fa-phone" style={{ color: '#8A8C90', fontSize: '2rem' }}></i></p></Col>
-                            <Col className="col-11">
+                            <Col className="col-1 me-1"> <p><i className="fa-solid fa-phone" style={{ color: '#8A8C90', fontSize: '2rem' }}></i></p></Col>
+                            <Col className="col-10">
                                 <p className="ff-avn fs-14 fw-bold m-0">{user?.phone ? user?.phone : "No Phone Number Has Been Registered"}</p>
                                 <p className="fs-12" style={{ color: '#8A8C90' }}>Mobile phone</p>
 
                             </Col>
                         </Row>
                         <Row className="text-start d-flex align-items-center mb-2">
-                            <Col className="col-1"> <p><i className="fa-solid fa-location-dot" style={{ color: '#8A8C90', fontSize: '2rem' }}></i></p></Col>
-                            <Col className="col-11">
+                            <Col className="col-1 me-1"><p><i className="fa-solid fa-location-dot" style={{ color: '#8A8C90', fontSize: '2rem' }}></i></p></Col>
+                            <Col className="col-10">
                                 <p className="ff-avn fs-14 fw-bold m-0">{user?.address ? user?.address : "No Address Has Been Submitted"}</p>
                                 <p className="fs-12" style={{ color: '#8A8C90' }}>Adress</p>
 
@@ -70,9 +70,11 @@ export default function ProfileEl() {
                     </Col>
                 </Row>
             </Container>
-            <Container className="p-5">
+
+            {state.user.role === "cust" && (<Container className="p-5">
                 <h3 className="ff-tns fs-36 fw-bold text-center text-lg-start">My Books</h3>
-            </Container>
+            </Container>)}
+
         </Container>
     )
 }

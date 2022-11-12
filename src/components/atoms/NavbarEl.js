@@ -7,6 +7,7 @@ import RegisterEl from '../auth/RegisterEl';
 
 import { UserContext } from '../context/userContext';
 import { API } from '../../config/api';
+import { useQuery } from 'react-query';
 
 function NavbarEl() {
     const navigate = useNavigate()
@@ -14,14 +15,23 @@ function NavbarEl() {
     const [showReg, setShowReg] = React.useState(false)
 
     const [state, dispatch] = React.useContext(UserContext)
-    console.log(state)
 
+    // const [user, setUser] = React.useState(null)
+    // const getUser = async () => {
+    //     try {
 
-    const [user, setUser] = React.useState(null)
-    const getUser = async () => {
+    //         const response = await API.get(`/user/${state.user.id}`)
+    //         setUser(response.data.data)
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
+
+    let { data: userData, refetch } = useQuery('userDataCache', async () => {
+
         const response = await API.get(`/user/${state.user.id}`)
-        setUser(response.data.data)
-    }
+        return response.data.data
+    })
 
     const handleLogout = () => {
         dispatch({
@@ -30,9 +40,11 @@ function NavbarEl() {
         navigate("/")
     }
 
+
     React.useEffect(() => {
-        if (state.user) {
-            getUser()
+        if (state.isLogin && state.user) {
+            // getUser()
+            refetch()
         }
     }, [state])
 
@@ -61,7 +73,7 @@ function NavbarEl() {
                                 </span>
 
                                 <Dropdown.Toggle variant="bg-0" id="dropdown-basic">
-                                    <img src={user?.image ? user.image : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZt50gh1uEkLw2lX99k9bWVzxDiKZ4O9rmqxk98XhfOg&s"} style={{ width: '60px', height: '60px', borderRadius: '50%' }} alt='' />
+                                    <img src={userData?.image ? userData?.image : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZt50gh1uEkLw2lX99k9bWVzxDiKZ4O9rmqxk98XhfOg&s"} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '50%' }} alt='' />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     <Dropdown.Item onClick={() => navigate("/profile")}><i className="fa-solid fa-user fa-xl me-3"></i>
@@ -77,7 +89,7 @@ function NavbarEl() {
                         </div>) : (<Dropdown>
 
                             <Dropdown.Toggle variant="bg-yellow" id="dropdown-basic">
-                                <img src={user?.image ? user.image : "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fblank-profile-picture-mystery-man-973460%2F&psig=AOvVaw1z2hV7RKTHxWFLWCLiM5dT&ust=1668152679236000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCIDG7JCPo_sCFQAAAAAdAAAAABAE"} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} alt='' />
+                                <img src={userData?.image ? userData?.image : "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fblank-profile-picture-mystery-man-973460%2F&psig=AOvVaw1z2hV7RKTHxWFLWCLiM5dT&ust=1668152679236000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCIDG7JCPo_sCFQAAAAAdAAAAABAE"} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} alt='' />
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Item onClick={() => navigate("/profile")}><i className="fa-solid fa-user fa-xl me-3"></i>

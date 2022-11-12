@@ -1,12 +1,20 @@
+import * as React from 'react'
+
 import { Container, Row, Col } from "react-bootstrap"
 
 import convertRupiah from 'rupiah-format'
 import { useNavigate } from "react-router-dom"
 import { API } from "../../config/api"
 import { useQuery } from "react-query"
+import { UserContext } from "../context/userContext"
+import LoginEl from '../auth/LoginEl'
+import RegisterEl from '../auth/RegisterEl'
 
 export default function BookLists() {
     const navigate = useNavigate()
+    const [state, dispatch] = React.useContext(UserContext)
+    const [showLog, setShowLog] = React.useState(false)
+    const [showReg, setShowReg] = React.useState(false)
 
     let { data: books } = useQuery('listBooksCache', async () => {
         const response = await API.get('books')
@@ -21,7 +29,7 @@ export default function BookLists() {
                 <Row className=" d-flex justify-content-start mx-auto">
 
                     {books?.map((item, index) => (
-                        <Col style={{ width: '205px' }} className="text-start col-12 col-md-6 col-lg-3 text-center me-3 mb-3" key={index} onClick={() => navigate(`/detail/${item?.id}`)}>
+                        <Col style={{ width: '205px' }} className="text-start col-12 col-md-6 col-lg-3 text-center me-3 mb-3" key={index} onClick={state.isLogin ? (() => navigate(`/detail/${item?.id}`)) : (() => setShowLog(true))}>
                             <div className="">
                                 <img className="mb-3 w-full" src={item?.cover} alt="book" style={{ height: '255px', objectFit: 'cover' }} />
                                 <div className="w-full">
@@ -36,6 +44,9 @@ export default function BookLists() {
                     ))}
                 </Row>
             </Container>
+            <LoginEl showLog={showLog} setShowLog={setShowLog} setShowReg={setShowReg} />
+
+            <RegisterEl showReg={showReg} setShowReg={setShowReg} setShowLog={setShowLog} />
         </div>
     )
 }

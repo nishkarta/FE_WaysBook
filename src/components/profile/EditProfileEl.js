@@ -2,13 +2,18 @@ import * as React from "react"
 import { Container, Form, Button, FloatingLabel, Row, Col } from "react-bootstrap"
 
 import { useMutation } from "react-query"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { API } from "../../config/api"
+import { useQuery } from "react-query"
+import { UserContext } from "../context/userContext"
 
 export default function EditProfileEl() {
-    const navigate = useNavigate()
-    // const [state, dispatch] = React.useContext()
+    const [isLoading, setIsLoading] = React.useState(false);
 
+    const params = useParams()
+    const navigate = useNavigate()
+    const [state, dispatch] = React.useContext(UserContext)
+    const [preview, setPreview] = React.useState(null)
 
     const [form, setForm] = React.useState({
         fullName: "",
@@ -16,9 +21,29 @@ export default function EditProfileEl() {
         password: "",
         gender: "",
         phone: "",
-        address: "",
+        adress: "",
         image: "",
     })
+
+    let { data: user } = useQuery("editProfileCache", async () => {
+        const response = await API.get(`/user/${state.user.id}`);
+        return response.data.data;
+    });
+
+    React.useEffect(() => {
+        if (user) {
+            setPreview(user.image);
+            setForm({
+                ...form,
+                fullName: user.fullName,
+                email: user.email,
+                password: user.password,
+                gender: user.gender,
+                phone: user.phone,
+                address: user.address,
+            })
+        }
+    }, [user])
 
     const handleChange = (e) => {
         setForm({
@@ -26,15 +51,17 @@ export default function EditProfileEl() {
             [e.target.name]:
                 e.target.type === "file" ? e.target.files : e.target.value
         })
-        // if (e.target.type === "file") {
-        //     let url = URL.createObjectURL(e.target.files[0])
-        //     setPreview(url)
-        // }
+        if (e.target.type === "file") {
+            let url = URL.createObjectURL(e.target.files[0])
+            setPreview(url)
+        }
     }
+    // console.log(form)
 
     const handleSubmit = useMutation(async (e) => {
         try {
             e.preventDefault()
+            setIsLoading(true)
 
             const formData = new FormData()
             formData.set("fullName", form.fullName)
@@ -42,10 +69,11 @@ export default function EditProfileEl() {
             formData.set("password", form.password)
             formData.set("gender", form.gender)
             formData.set("phone", form.phone)
-            formData.set("role", form.role)
+            formData.set("address", form.address)
+
             formData.set("image", form.image[0], form.image[0].name)
 
-            const data = await API.post("/book", formData, {
+            const response = await API.patch(`/user/${user.id}`, formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.token}`
                 }
@@ -65,53 +93,64 @@ export default function EditProfileEl() {
                 <Form onSubmit={(e) => handleSubmit.mutate(e)} className="mb-3">
                     <Form.Group className="mb-4" >
                         <FloatingLabel label='Full Name' controlId="floatingInput">
-                            <Form.Control name="fullName" type="fullName" placeholder="Full Name" />
+                            <Form.Control value={form?.fullName} onChange={handleChange} name="fullName" type="text" placeholder="Full Name" />
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-4" >
-                        <FloatingLabel label='Publication Date' controlId="floatingInput">
-                            <Form.Control name="date" type="date" placeholder="Publication Date" />
+                        <FloatingLabel label='Email' controlId="floatingInput">
+                            <Form.Control value={form?.email} onChange={handleChange} name="email" type="email" placeholder="Email" />
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-4" >
-                        <FloatingLabel label='Pages' controlId="floatingInput">
-                            <Form.Control name="pages" type="number" placeholder="Pages" />
+                        <FloatingLabel label='Password' controlId="floatingInput">
+                            <Form.Control value={form?.password} onChange={handleChange} name="password" type="password" placeholder="Password" />
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-4" >
-                        <FloatingLabel label='ISBN' controlId="floatingInput">
-                            <Form.Control name="isbn" type="text" placeholder="ISBN" />
+                        <FloatingLabel label='Gender' controlId="floatingInput">
+                            <Form.Select required onChange={handleChange} name="gender" value={form?.gender} aria-label="Default select example" className='bg-grey2 text-grey2 border-grey2'>
+                                <option hidden value="default">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="unknown">I'd like not to talk about it</option>
+                            </Form.Select>
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-4" >
-                        <FloatingLabel label='Price' controlId="floatingInput">
-                            <Form.Control name="price" type="num" placeholder="Price" />
+                        <FloatingLabel label='Phone' controlId="floatingInput">
+                            <Form.Control value={form?.phone} onChange={handleChange} name="phone" type="tel" placeholder="Phone" />
                         </FloatingLabel>
                     </Form.Group>
-                    <Form.Group className="mb-4">
-                        <FloatingLabel controlId="floatingTextarea2" label="About This Book">
-                            <Form.Control
-                                as="textarea"
-                                placeholder="About This Book"
-                                style={{ height: '100px' }}
-                            />
+                    <Form.Group className="mb-4" >
+                        <FloatingLabel label='Address' controlId="floatingInput">
+                            <Form.Control value={form?.address} onChange={handleChange} name="address" type="text" placeholder="Address" />
                         </FloatingLabel>
                     </Form.Group>
                     <Row>
-                        <Col className="input-group mb-3 col-6 w-50">
-                            <input type="file" className="form-control" placeholder="Attach Book File" aria-label="Attach Book File" aria-describedby="basic-addon2" />
-                            <span className="input-group-text" id="basic-addon2">.pdf</span>
-                        </Col>
+
                         <Col className="input-group mb-3 w-50">
                             <>
 
-                                <input type="file" className="form-control" placeholder="Attach Book Cover" aria-label="Attach Book Cover" aria-describedby="basic-addon2" />
+                                <input type="file" name="image" onChange={handleChange} className="form-control" placeholder="Attach Book Cover" aria-label="Attach Book Cover" aria-describedby="basic-addon2" />
                                 <span className="input-group-text" id="basic-addon2">.png</span>
                             </>
                         </Col>
                     </Row>
+                    {preview && (
+                        <div className="float-start">
+                            <img
+                                src={preview}
+                                style={{
+                                    maxWidth: "150px",
+                                    maxHeight: "150px",
+                                    objectFit: "cover",
+                                }}
+                                alt={preview}
+                            />
+                        </div>
+                    )}
 
-                    <Button style={{ backgroundColor: '#393939' }} className="rounded-0 border-0 p-3 float-end">Add Book <i className="fa-solid fa-book"></i></Button>
+                    <Button type="submit" style={{ backgroundColor: '#393939' }} className="rounded-0 border-0 p-3 float-end">{isLoading ? "Saving Changes..." : "Save Changes"}</Button>
                 </Form>
             </Container>
         </Container>

@@ -14,11 +14,9 @@ export default function Detail({ item }) {
 
     const params = useParams()
     const navigate = useNavigate()
-    console.log(params)
 
-    let { data: book, refetch } = useQuery("detailCache", async () => {
+    let { data: book } = useQuery("detailCache", async () => {
         const response = await API.get(`book/${params.id}`)
-        // console.log(item.id)
         console.log(response.data.data)
         return response.data.data
     })

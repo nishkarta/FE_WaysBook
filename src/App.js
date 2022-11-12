@@ -12,6 +12,7 @@ import Detail from './pages/Detail';
 import Home from './pages/Home';
 import Income from './pages/admin/Income';
 import Profile from './pages/Profile';
+import EditProfile from './pages/EditProfile';
 import UploadedBooks from './pages/admin/UploadedBook';
 import UpdateBook from './pages/admin/UpdateBook';
 import { API, setAuthToken } from './config/api';
@@ -74,23 +75,41 @@ function App() {
     return state.isLogin ? <Outlet /> : <Navigate to="/" />
   }
 
+  const AdminRoute = () => {
+    return state.user.role === "adm" ? <Outlet /> : <Navigate to="/" />
+  }
+
 
   return (
     <div className="App">
-      <NavbarEl />
-      <Routes>
-        <Route exact path='/' element={<Home />} />
-        <Route path="/" element={<PrivateRoute />}>
-          <Route exact path='/' element={<Home />} />
-          <Route exact path='/detail/:id' element={<Detail />} />
-          <Route exact path='/cart' element={<Cart />} />
-          <Route exact path='/add-book' element={<AddBook />} />
-          <Route exact path='/update-book/:id' element={<UpdateBook />} />
-          <Route exact path='/income' element={<Income />} />
-          <Route exact path='/profile' element={<Profile />} />
-          <Route exact path='/uploaded' element={<UploadedBooks />} />
-        </Route>
-      </Routes>
+
+      {isLoading ? <></>
+        :
+        <>
+          <NavbarEl />
+          <Routes>
+            <Route exact path='/' element={<Home />} />
+            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/" element={<AdminRoute />}>
+                <Route exact path='/add-book' element={<AddBook />} />
+                <Route exact path='/uploaded' element={<UploadedBooks />} />
+                <Route exact path='/update-book/:id' element={<UpdateBook />} />
+                <Route exact path='/income' element={<Income />} />
+              </Route>
+              <Route exact path='/' element={<Home />} />
+              <Route exact path='/detail/:id' element={<Detail />} />
+              <Route exact path='/cart' element={<Cart />} />
+
+              <Route exact path='/profile' element={<Profile />} />
+              <Route exact path='/edit-profile' element={<EditProfile />} />
+
+            </Route>
+          </Routes>
+
+        </>
+
+      }
+
 
     </div>
   );

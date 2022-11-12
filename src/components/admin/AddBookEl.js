@@ -8,10 +8,12 @@ import { API } from "../../config/api"
 export default function AddBookEl() {
     const navigate = useNavigate()
     // const [state, dispatch] = React.useContext()
+    const [isLoading, setIsLoading] = React.useState(false)
 
 
     const [form, setForm] = React.useState({
         title: "",
+        author: "",
         publication_date: "",
         pages: "",
         isbn: "",
@@ -37,9 +39,11 @@ export default function AddBookEl() {
     const handleSubmit = useMutation(async (e) => {
         try {
             e.preventDefault()
+            setIsLoading(true)
 
             const formData = new FormData()
             formData.set("title", form.title)
+            formData.set("author", form.author)
             formData.set("publication_date", form.publication_date)
             formData.set("pages", form.pages)
             formData.set("isbn", form.isbn)
@@ -68,7 +72,12 @@ export default function AddBookEl() {
                 <Form onSubmit={(e) => handleSubmit.mutate(e)} className="mb-3">
                     <Form.Group className="mb-4" >
                         <FloatingLabel label='Title' controlId="floatingInput">
-                            <Form.Control onChange={handleChange} name="title" type="title" placeholder="Title" />
+                            <Form.Control onChange={handleChange} name="title" type="text" placeholder="Title" />
+                        </FloatingLabel>
+                    </Form.Group>
+                    <Form.Group className="mb-4" >
+                        <FloatingLabel label='Author' controlId="floatingInput">
+                            <Form.Control onChange={handleChange} name="author" type="text" placeholder="Author" />
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-4" >
@@ -88,7 +97,7 @@ export default function AddBookEl() {
                     </Form.Group>
                     <Form.Group className="mb-4" >
                         <FloatingLabel label='Price' controlId="floatingInput">
-                            <Form.Control onChange={handleChange} name="price" type="num" placeholder="Price" />
+                            <Form.Control onChange={handleChange} name="price" type="number" placeholder="Price" />
                         </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="mb-4">
@@ -114,7 +123,7 @@ export default function AddBookEl() {
                         </Col>
                     </Row>
 
-                    <Button type="submit" style={{ backgroundColor: '#393939' }} className="rounded-0 border-0 p-3 float-end">Add Book <i className="fa-solid fa-book"></i></Button>
+                    <Button type="submit" style={{ backgroundColor: '#393939' }} className="rounded-0 border-0 p-3 float-end">{isLoading ? "Adding Book..." : "Add Book"} <i className="fa-solid fa-book"></i></Button>
                 </Form>
             </Container>
         </Container>
