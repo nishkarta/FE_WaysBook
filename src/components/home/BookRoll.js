@@ -68,7 +68,7 @@ export default function BookRoll() {
                                 <Col style={{}} className="px-0 mx-0 d-flex align-items-center">
                                     <Card.Body className="bg-white me-3 py-1 px-3" style={{ borderRadius: 0, height: '14rem', width: '8rem' }}>
                                         <Card.Title onClick={state.isLogin ? (() => navigate(`/detail/${item?.id}`)) : (() => setShowLog(true))} className="ff-tns fs-24 fw-bold" style={{ width: "150px", overFlow: "hidden" }}>{item?.title}</Card.Title>
-                                        <Card.Text onClick={state.isLogin ? (() => navigate(`/detail/${item?.id}`)) : (() => setShowLog(true))} style={{ lineHeight: '2', marginBottom: '40px' }}>
+                                        <Card.Text style={{ lineHeight: '2', marginBottom: '40px' }}>
                                             <span className="ff-avn fs-14" style={{ color: '#929292', fontStyle: 'italic' }}>By {item?.author}</span>
                                             <br />
                                             <span className="ff-avn fs-14">{item?.about.slice(0, 7)}...</span>

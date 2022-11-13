@@ -8,9 +8,11 @@ import { Button } from 'react-bootstrap'
 import AddOrderPopup from '../components/cart_orders/AddOrderPopup'
 import { useQuery } from 'react-query'
 import { API } from '../config/api'
+import { UserContext } from '../components/context/userContext'
 
 export default function Detail({ item }) {
     const [showAddOrderPopup, setShowAddOrderPopup] = React.useState(false)
+    const [state, dispatch] = React.useContext(UserContext)
 
     const params = useParams()
     const navigate = useNavigate()
@@ -35,7 +37,8 @@ export default function Detail({ item }) {
             <>
                 <DetailHead book={book} />
                 <DetailAbout book={book} />
-                <Button variant='dark' className="float-end mx-5" onClick={() => addToCartHandler(params.id)}>Add to Cart<i className="fa-solid fa-cart-shopping"></i></Button>
+                {state?.user.role === "cust" && <Button variant='dark' className="float-end mx-5" onClick={() => addToCartHandler(params.id)}>Add to Cart<i className="fa-solid fa-cart-shopping"></i></Button>}
+
             </>
 
             <AddOrderPopup showAddOrderPopup={showAddOrderPopup} setShowAddOrderPopup={setShowAddOrderPopup} />
