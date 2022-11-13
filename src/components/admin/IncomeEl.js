@@ -10,6 +10,7 @@ export default function IncomeEl() {
         const response = await API.get('/transactions')
         return response.data.data
     })
+    console.log(transactionData);
 
     React.useEffect(() => {
         refetch()
