@@ -23,13 +23,61 @@ export default function CartEl() {
 
     const handleCheckout = async () => {
         try {
-            const response = await API.post("/transaction")
 
-            setShowFixOrderPopup(true)
+            const data = {
+                total: subTotal
+            }
+            const response = await API.post("/transaction", data);
+            console.log(response, "ini response")
+
+            const token = response.data.data.token;
+
+            window.snap.pay(token, {
+                onSuccess: function (result) {
+                    /* You may add your own implementation here */
+                    console.log(result);
+                    navigate("/profile");
+                },
+                onPending: function (result) {
+                    /* You may add your own implementation here */
+                    console.log(result);
+                    navigate("/profile");
+                },
+                onError: function (result) {
+                    /* You may add your own implementation here */
+                    console.log(result);
+                },
+                onClose: function () {
+                    /* You may add your own implementation here */
+                    alert("you closed the popup without finishing the payment");
+                },
+            });
+
+            // setShowFixOrderPopup(true)
         } catch (err) {
             console.log(err)
         }
     }
+
+
+    React.useEffect(() => {
+        //change this to the script source you want to load, for example this is snap.js sandbox env
+        const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+        //change this according to your client-key
+        const myMidtransClientKey = "SB-Mid-client-XuvTZnVxV9tn-tIZ";
+
+        let scriptTag = document.createElement("script");
+        scriptTag.src = midtransScriptUrl;
+        // optional if you want to set script attribute
+        // for example snap.js have data-client-key attribute
+        scriptTag.setAttribute("data-client-key", myMidtransClientKey);
+
+        document.body.appendChild(scriptTag);
+        return () => {
+            document.body.removeChild(scriptTag);
+        };
+    }, []);
+
 
 
     React.useEffect(() => {
