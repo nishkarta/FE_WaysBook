@@ -24,7 +24,7 @@ export default function IncomeEl() {
                         <tr>
                             <th>No</th>
                             <th>Users</th>
-                            <th>Evidence of Transfer</th>
+                            <th>Transaction ID</th>
                             <th>Product Purchased</th>
                             <th>Total Payment</th>
                             <th>Status Payment</th>
@@ -35,7 +35,7 @@ export default function IncomeEl() {
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{item.buyer.fullName}</td>
-                                <td>bca.png</td>
+                                <td>{item?.id}</td>
                                 <td>{item?.book !== [] ? [...item?.book].map((book) => book.title).join(",") : "Book 1"}</td>
                                 <td>{convertRupiah.convert(item?.total)}</td>
                                 <td>{item?.status}</td>
