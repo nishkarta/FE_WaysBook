@@ -8,7 +8,6 @@ export default function IncomeEl() {
 
     let { data: transactionData, refetch } = useQuery('transactonCache', async () => {
         const response = await API.get('/transactions')
-        console.log(response.data.data)
         return response.data.data
     })
 
@@ -37,7 +36,7 @@ export default function IncomeEl() {
                                 <td>{index + 1}</td>
                                 <td>{item.buyer.fullName}</td>
                                 <td>bca.png</td>
-                                <td>{[...item.book].map((book) => book.title).join(",")}</td>
+                                <td>{item?.book ? [...item?.book].map((book) => book.title).join(",") : "Book 1"}</td>
                                 <td>{convertRupiah.convert(item?.total)}</td>
                                 <td>{item?.status}</td>
                             </tr>
