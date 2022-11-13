@@ -37,7 +37,7 @@ export default function IncomeEl() {
                                 <td>{index + 1}</td>
                                 <td>{item.buyer.fullName}</td>
                                 <td>bca.png</td>
-                                <td>Book1</td>
+                                <td>{[...item.book].map((book) => book.title).join(",")}</td>
                                 <td>{convertRupiah.convert(item?.total)}</td>
                                 <td>{item?.status}</td>
                             </tr>
