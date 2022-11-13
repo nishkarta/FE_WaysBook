@@ -21,11 +21,14 @@ export default function CartEl() {
         }
     })
 
+    const AllBooks = cartData?.map((item) => item.book)
+
     const handleCheckout = async () => {
         try {
 
             const data = {
-                total: subTotal
+                total: subTotal,
+                book: AllBooks
             }
             const response = await API.post("/transaction", data);
             console.log(response, "ini response")
