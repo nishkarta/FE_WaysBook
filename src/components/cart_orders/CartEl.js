@@ -21,6 +21,16 @@ export default function CartEl() {
         }
     })
 
+    const handleCheckout = async () => {
+        try {
+            const response = await API.post("/transaction")
+
+            setShowFixOrderPopup(true)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
 
     React.useEffect(() => {
         refetch()
@@ -87,7 +97,7 @@ export default function CartEl() {
                             <Col style={{ color: '#44B200' }} className="text-start fw-bold">Total</Col>
                             <Col style={{ color: '#44B200' }} className="text-end fw-bold">{convertRupiah.convert(subTotal)}</Col>
                         </Row>
-                        <Button onClick={() => setShowFixOrderPopup(true)} className="float-end fs-18 fw-bold mt-5" variant='dark' style={{ width: '70%' }}>Pay</Button>
+                        <Button onClick={handleCheckout} className="float-end fs-18 fw-bold mt-5" variant='dark' style={{ width: '70%' }}>Pay</Button>
                     </Col>
                 </Row >
                 ) : <div className=' d-flex flex-column align-items-center justify-content-center fs-tns' style={{ height: '45vh' }}>

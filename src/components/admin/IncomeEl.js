@@ -1,7 +1,21 @@
+import * as React from 'react'
 import { Container, Table } from "react-bootstrap"
 import convertRupiah from 'rupiah-format'
+import { API } from "../../config/api"
+import { useQuery } from "react-query"
 
 export default function IncomeEl() {
+
+    let { data: transactionData, refetch } = useQuery('transactonCache', async () => {
+        const response = await API.get('/transactions')
+        console.log(response.data.data)
+        return response.data.data
+    })
+
+    React.useEffect(() => {
+        refetch()
+    }, [])
+
     return (
         <Container className="px-5">
             <Container className="p-5">
@@ -18,46 +32,17 @@ export default function IncomeEl() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Radif Ganteng</td>
-                            <td>bca.png</td>
-                            <td>Book1</td>
-                            <td>{convertRupiah.convert(20000)}</td>
-                            <td>Approved</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Radif Ganteng</td>
-                            <td>bca.png</td>
-                            <td>Book1</td>
-                            <td>{convertRupiah.convert(20000)}</td>
-                            <td>Approved</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Radif Ganteng</td>
-                            <td>bca.png</td>
-                            <td>Book1</td>
-                            <td>{convertRupiah.convert(20000)}</td>
-                            <td>Approved</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Radif Ganteng</td>
-                            <td>bca.png</td>
-                            <td>Book1</td>
-                            <td>{convertRupiah.convert(20000)}</td>
-                            <td>Approved</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Radif Ganteng</td>
-                            <td>bca.png</td>
-                            <td>Book1</td>
-                            <td>{convertRupiah.convert(20000)}</td>
-                            <td>Approved</td>
-                        </tr>
+                        {transactionData?.map((item, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{item.buyer.fullName}</td>
+                                <td>bca.png</td>
+                                <td>Book1</td>
+                                <td>{convertRupiah.convert(item?.total)}</td>
+                                <td>{item?.status}</td>
+                            </tr>
+                        ))}
+
                     </tbody>
                 </Table>
 

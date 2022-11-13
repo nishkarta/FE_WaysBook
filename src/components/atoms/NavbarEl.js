@@ -55,7 +55,8 @@ function NavbarEl() {
                                 setShowReg(true)
                             }}>Register</Button>
                         </> : state.user.role === 'cust' ? (<div>
-                            <Dropdown className='d-flex align-items-center'>
+                            <Dropdown
+                                className='d-flex align-items-center'>
                                 <span style={{ cursor: 'pointer' }} onClick={() => navigate("/cart")} >
                                     <i className="fa-solid fa-cart-shopping fs-1"></i>
 
@@ -64,7 +65,7 @@ function NavbarEl() {
                                 <Dropdown.Toggle variant="bg-0" id="dropdown-basic">
                                     <img src={userData?.image ? userData?.image : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZt50gh1uEkLw2lX99k9bWVzxDiKZ4O9rmqxk98XhfOg&s"} style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '50%' }} alt='' />
                                 </Dropdown.Toggle>
-                                <Dropdown.Menu>
+                                <Dropdown.Menu align="end">
                                     <Dropdown.Item onClick={() => navigate("/profile")}><i className="fa-solid fa-user fa-xl me-3"></i>
                                         Profile
                                     </Dropdown.Item>
@@ -80,7 +81,7 @@ function NavbarEl() {
                             <Dropdown.Toggle variant="bg-yellow" id="dropdown-basic">
                                 <img src={userData?.image ? userData?.image : "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fvectors%2Fblank-profile-picture-mystery-man-973460%2F&psig=AOvVaw1z2hV7RKTHxWFLWCLiM5dT&ust=1668152679236000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCIDG7JCPo_sCFQAAAAAdAAAAABAE"} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} alt='' />
                             </Dropdown.Toggle>
-                            <Dropdown.Menu>
+                            <Dropdown.Menu align="end">
                                 <Dropdown.Item onClick={() => navigate("/profile")}><i className="fa-solid fa-user fa-xl me-3"></i>
                                     Profile
                                 </Dropdown.Item>

@@ -34,7 +34,6 @@ export default function AddBookEl() {
         //     setPreview(url)
         // }
     }
-    console.log(form)
 
     const handleSubmit = useMutation(async (e) => {
         try {
