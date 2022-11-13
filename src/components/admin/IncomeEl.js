@@ -37,7 +37,7 @@ export default function IncomeEl() {
                                 <td>{index + 1}</td>
                                 <td>{item.buyer.fullName}</td>
                                 <td>{item?.id}</td>
-                                <td>{item?.book !== [] ? [...item?.book].map((book) => book.title).join(",") : "Book 1"}</td>
+                                <td>{item?.book.length !== 0 ? [...item?.book].map((book) => book.title).join(",") : "Book 1"}</td>
                                 <td>{convertRupiah.convert(item?.total)}</td>
                                 <td>{item?.status}</td>
                             </tr>
