@@ -54,7 +54,7 @@ export default function BookRoll() {
     return (
         <div className="linear-grey py-5 py-lg-0 px-5 ">
 
-            <h1 className="ff-tns fs-36 fw-bold mb-5">Latest Uploads</h1>
+            {/* <h1 className="ff-tns fs-36 fw-bold mb-5">Latest Uploads</h1> */}
 
             <Slider {...settings}>
                 {
