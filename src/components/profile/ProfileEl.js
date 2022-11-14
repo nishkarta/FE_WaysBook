@@ -82,7 +82,7 @@ export default function ProfileEl() {
                             <div className="w-full">
                                 <h4 className="ff-tns fw-bold text-start mb-1">Book 1</h4>
                                 <p className="text-start fst-italic fs-14 ff-avn text-grey mb-1" style={{ color: '#929292' }}>By Riri Sukmaresa</p>
-                                <button className='fw-bold w-100 bg-dark text-white'>Download</button>
+                                <button className='fw-bold w-100 bg-dark text-white'><a href='https://drive.google.com/file/d/1X0MEooA5ycTcW1OGTGFoeaEsWvpP3S6d/view?usp=sharing' target="_blank">Download</a></button>
 
                             </div>
 
