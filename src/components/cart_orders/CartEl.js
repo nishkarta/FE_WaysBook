@@ -28,11 +28,15 @@ export default function CartEl() {
     const handleCheckout = async () => {
         try {
 
-            const data = {
-                total: subTotal,
-                book_id: cart
-            }
-            const response = await API.post("/transaction", data);
+
+            const formData = new FormData()
+            formData.set("total", subTotal)
+            formData.set("book_id", cart)
+            // const data = {
+            //     total: subTotal,
+            //     book_id: cart
+            // }
+            const response = await API.post("/transaction", formData);
             // const cart = response.data.data.map(item => item.book_id)
             console.log(response, "ini response")
 
