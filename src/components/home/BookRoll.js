@@ -71,7 +71,7 @@ export default function BookRoll() {
                                         <Card.Text style={{ lineHeight: '2', marginBottom: '20px' }}>
                                             <span className="ff-avn fs-14" style={{ color: '#929292', fontStyle: 'italic' }}>By {item?.author}</span>
                                             <br />
-                                            <span className="ff-avn fs-14">{item?.about.slice(0, 7)}...</span>
+                                            <span className="ff-avn fs-14">{item?.about.slice(0, 13)}...</span>
                                             <br />
                                             <span className="ff-avn fs-18" style={{ color: '#44B200' }}>{convertRupiah.convert(item?.price)}</span>
                                             <br />
