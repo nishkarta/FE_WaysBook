@@ -90,7 +90,7 @@ export default function ProfileEl() {
 
                 {transactionData?.length !== undefined && (
                     <Row className=" d-flex justify-content-start mx-auto">
-                        {transactionData[0]?.map((item, index) => (
+                        {transactionData[0]?.book.map((item, index) => (
                             <Col key={index} style={{ width: '220px' }} className="text-start col-12 col-md-6 col-lg-3 text-center me-3 mb-3" >
 
                                 <div className="">
