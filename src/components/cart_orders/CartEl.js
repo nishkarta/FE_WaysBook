@@ -22,6 +22,8 @@ export default function CartEl() {
     })
 
     const AllBooks = cartData?.map((item) => item.book)
+    console.log(cartData, "cartData")
+    console.log(AllBooks, "allbooks")
 
     const handleCheckout = async () => {
         try {
