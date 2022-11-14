@@ -87,20 +87,24 @@ export default function ProfileEl() {
                 <h3 className="ff-tns fs-36 fw-bold text-center text-lg-start">My Books</h3>
                 <Row className=" d-flex justify-content-start mx-auto">
 
+                    {transactionData[0]?.map((item, index) => (
+                        <Col key={index} style={{ width: '220px' }} className="text-start col-12 col-md-6 col-lg-3 text-center me-3 mb-3" >
 
-                    <Col style={{ width: '220px' }} className="text-start col-12 col-md-6 col-lg-3 text-center me-3 mb-3" >
-                        <div className="">
-                            <img className="mb-3 w-full" src="https://pub-static.fotor.com/assets/projects/pages/dddda0b59fb9433eb53e7174981c8b67/blue-minimal-novel-cover-6e355184dc3545c6bec6a9f618f83e0d.jpg" alt="book" style={{ height: '255px', objectFit: 'cover' }} />
-                            <div className="w-full">
-                                <h4 className="ff-tns fw-bold text-start mb-1">Book 1</h4>
-                                <p className="text-start fst-italic fs-14 ff-avn text-grey mb-1" style={{ color: '#929292' }}>By Riri Sukmaresa</p>
-                                <button className='fw-bold w-100 bg-dark text-white border-0 py-2'><a href='https://drive.google.com/file/d/1X0MEooA5ycTcW1OGTGFoeaEsWvpP3S6d/view?usp=sharing' target="_blank" style={{ color: 'white', textDecoration: 'none' }}>Download</a></button>
+                            <div className="">
+                                <img className="mb-3 w-full" src={item.cover} alt="book" style={{ height: '255px', objectFit: 'cover' }} />
+                                <div className="w-full">
+                                    <h4 className="ff-tns fw-bold text-start mb-1">{item?.title}</h4>
+                                    <p className="text-start fst-italic fs-14 ff-avn text-grey mb-1" style={{ color: '#929292' }}>By {item?.author}</p>
+                                    <button className='fw-bold w-100 bg-dark text-white border-0 py-2'><a href='https://drive.google.com/file/d/1X0MEooA5ycTcW1OGTGFoeaEsWvpP3S6d/view?usp=sharing' target="_blank" style={{ color: 'white', textDecoration: 'none' }}>Download</a></button>
+
+                                </div>
 
                             </div>
 
-                        </div>
+                        </Col>
 
-                    </Col>
+                    ))}
+
 
                 </Row>
             </Container>)}
