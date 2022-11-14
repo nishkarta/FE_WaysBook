@@ -75,8 +75,8 @@ export default function BookRoll() {
                                             <br />
                                             <span className="ff-avn fs-18" style={{ color: '#44B200' }}>{convertRupiah.convert(item?.price)}</span>
                                             <br />
+                                            <Button style={{ borderRadius: 0 }} variant="dark w-100" onClick={state?.isLogin ? (() => addToCartHandler(item.id)) : (() => setShowLog(true))}>Add Cart</Button>
                                         </Card.Text>
-                                        <Button style={{ borderRadius: 0 }} variant="dark w-100" onClick={state?.isLogin ? (() => addToCartHandler(item.id)) : (() => setShowLog(true))}>Add Cart</Button>
                                     </Card.Body>
                                 </Col>
 
