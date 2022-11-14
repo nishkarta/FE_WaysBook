@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { Container, Row, Col, Image, Button } from "react-bootstrap"
+import { useQuery } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import { API } from '../../config/api'
 import { UserContext } from "../context/userContext"
@@ -16,10 +17,21 @@ export default function ProfileEl() {
         setUser(response.data.data)
     }
 
+    const { data: transactionData, refetch } = useQuery('currentTransactionCache', async () => {
+        try {
+            const response = await API.get('/current-transactions')
+            return response.data.data
+        } catch (err) {
+            console.log(err)
+        }
+    })
+    console.log(transactionData, "current transaction")
+
     React.useEffect(() => {
         if (state.user) {
             getUser()
         }
+        refetch()
     }, [state])
 
     return (

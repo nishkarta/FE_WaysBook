@@ -45,7 +45,7 @@ export default function CartEl() {
             window.snap.pay(token, {
                 onSuccess: function (result) {
                     /* You may add your own implementation here */
-                    console.log(result);
+                    console.log(result)
                     navigate("/profile");
                 },
                 onPending: function (result) {

@@ -56,7 +56,6 @@ export default function EditProfileEl() {
             setPreview(url)
         }
     }
-    // console.log(form)
 
     const handleSubmit = useMutation(async (e) => {
         try {
