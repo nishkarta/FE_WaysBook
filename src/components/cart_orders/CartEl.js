@@ -21,18 +21,19 @@ export default function CartEl() {
         }
     })
 
-    const AllBookID = cartData?.map((item) => item.book.id)
-    console.log(cartData, "cartData")
-    console.log(AllBookID, "allbooks")
+    const cart = cartData?.map((item) => item.book_id)
+    // console.log(cartData, "cartData")
+    // console.log(AllBookID, "allbooks")
 
     const handleCheckout = async () => {
         try {
 
             const data = {
                 total: subTotal,
-                book_id: AllBookID
+                book_id: cart
             }
             const response = await API.post("/transaction", data);
+            // const cart = response.data.data.map(item => item.book_id)
             console.log(response, "ini response")
 
             const token = response.data.data.token;
