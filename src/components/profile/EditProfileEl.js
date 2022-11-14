@@ -25,7 +25,7 @@ export default function EditProfileEl() {
         image: "",
     })
 
-    let { data: user } = useQuery("editProfileCache", async () => {
+    let { data: user, refetch } = useQuery("editProfileCache", async () => {
         const response = await API.get(`/user/${state.user.id}`);
         return response.data.data;
     });
@@ -43,6 +43,7 @@ export default function EditProfileEl() {
                 address: user.address,
             })
         }
+        refetch()
     }, [user])
 
     const handleChange = (e) => {
