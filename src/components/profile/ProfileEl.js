@@ -76,7 +76,7 @@ export default function ProfileEl() {
                 <Row className=" d-flex justify-content-start mx-auto">
 
 
-                    <Col style={{ width: '205px' }} className="text-start col-12 col-md-6 col-lg-3 text-center me-3 mb-3" >
+                    <Col style={{ width: '220px' }} className="text-start col-12 col-md-6 col-lg-3 text-center me-3 mb-3" >
                         <div className="">
                             <img className="mb-3 w-full" src="https://pub-static.fotor.com/assets/projects/pages/dddda0b59fb9433eb53e7174981c8b67/blue-minimal-novel-cover-6e355184dc3545c6bec6a9f618f83e0d.jpg" alt="book" style={{ height: '255px', objectFit: 'cover' }} />
                             <div className="w-full">
