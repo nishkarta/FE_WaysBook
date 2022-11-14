@@ -21,7 +21,7 @@ export default function CartEl() {
         }
     })
 
-    const cart = cartData?.map((item) => item.book_id)
+    const cart = cartData?.map((item) => item.book.id)
     console.log(cartData, "cartData")
     // console.log(AllBookID, "allbooks")
     console.log("ini cart", cart)
