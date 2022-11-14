@@ -24,7 +24,7 @@ export default function CartEl() {
     const cart = cartData?.map((item) => item.book_id)
     // console.log(cartData, "cartData")
     // console.log(AllBookID, "allbooks")
-
+    console.log("ini cart", cart)
     const handleCheckout = async () => {
         try {
 
