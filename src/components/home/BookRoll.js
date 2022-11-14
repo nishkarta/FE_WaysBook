@@ -32,7 +32,7 @@ export default function BookRoll() {
         slidesToScroll: 1,
         autoplay: true,
         speed: 2000,
-        autoplaySpeed: 6000,
+        autoplaySpeed: 7000,
         pauseOnHover: true
     };
 
