@@ -36,7 +36,7 @@ export default function AddBookEl() {
             setForm({
                 ...form,
                 title: book.title,
-                author: book.title,
+                author: book.author,
                 publication_date: book.publication_date,
                 pages: book.pages,
                 isbn: book.isbn,
