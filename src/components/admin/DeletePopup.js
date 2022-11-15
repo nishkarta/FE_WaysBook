@@ -5,6 +5,7 @@ import { API } from "../../config/api"
 
 export default function ConfirmDelete(props) {
     const [showNotification, setShowNotification] = React.useState(false)
+    const [isLoading, setIsLoading] = React.useState(false)
     let { data: books } = useQuery('uploadedBooksCache', async () => {
         const response = await API.get('/books-latest')
         return response.data.data
@@ -22,10 +23,11 @@ export default function ConfirmDelete(props) {
                     <Row>
                         <Col><Button variant="dark" className="w-100 fw-bold" onClick={() => props.setShowConfirmDelete(false)}>No</Button></Col>
                         <Col><Button variant="danger" className="w-100 fw-bold" onClick={async () => {
+                            setIsLoading(true);
                             const response = await API.delete(`/book/${props.idDelete}`);
                             props.setShowConfirmDelete(false);
                             setShowNotification(true)
-                        }}>Yes</Button></Col>
+                        }}>{isLoading ? "Deleting book..." : "Yes"}</Button></Col>
                     </Row>
                 </Modal.Body>
             </Modal>
