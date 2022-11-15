@@ -36,7 +36,7 @@ export default function ConfirmDelete(props) {
             <Modal size="md" centered show={showNotification} onHide={() => setShowNotification(false)}>
 
                 <Modal.Body className="py-3">
-                    <h3 className='ff-avn fs-24 text-center mb-3' >Item successfully deleted!</h3>
+                    <h3 className='ff-avn fs-24 text-center mb-3' >Book successfully deleted!</h3>
                     <p className="text-center fw-bold mb-1" onClick={() => setShowNotification(false)} style={{ cursor: 'pointer' }}>back to list</p>
                 </Modal.Body>
             </Modal>
