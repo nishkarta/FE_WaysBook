@@ -4,9 +4,12 @@ import { useQuery } from "react-query"
 import { API } from "../../config/api"
 import convertRupiah from 'rupiah-format'
 import { useNavigate } from "react-router-dom"
+import ConfirmDelete from './DeletePopup'
 
 export default function UploadedBooksEl() {
     const navigate = useNavigate()
+    const [showConfirmDelete, setShowConfirmDelete] = React.useState(false)
+    const [idDelete, setIdDelete] = React.useState()
 
     let { data: books, refetch } = useQuery('uploadedBooksCache', async () => {
         const response = await API.get('/books-latest')
@@ -44,9 +47,9 @@ export default function UploadedBooksEl() {
                             <td><Button onClick={() => navigate(`/detail/${item?.id}`)} className="fw-bold" variant="outline-success">Detail</Button></td>
                             <td>
                                 <Button onClick={() => navigate(`/update-book/${item.id}`)} variant="dark" className="fw-bold me-2">Update</Button>
-                                <Button onClick={async () => {
-                                    const response = await API.delete(`/book/${item.id}`);
-                                    refetch()
+                                <Button onClick={() => {
+                                    setIdDelete(item.id);
+                                    setShowConfirmDelete(true)
                                 }} variant="danger" className="fw-bold">Delete</Button>
                             </td>
                         </tr>
@@ -54,6 +57,8 @@ export default function UploadedBooksEl() {
 
                 </tbody>
             </Table>
+            <ConfirmDelete
+                showConfirmDelete={showConfirmDelete} setShowConfirmDelete={setShowConfirmDelete} idDelete={idDelete} />
         </Container>
     )
 }
