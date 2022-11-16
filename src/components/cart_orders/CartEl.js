@@ -9,6 +9,15 @@ import FixOrderPopup from './FixOrderPopup'
 
 export default function CartEl() {
     const [showFixOrderPopup, setShowFixOrderPopup] = React.useState(false)
+    const [isLoading, setIsLoading] = React.useState(true)
+
+    setTimeout(() => {
+        setIsLoading(false)
+
+    }, 500);
+
+
+
     const navigate = useNavigate()
 
 
