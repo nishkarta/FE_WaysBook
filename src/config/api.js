@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const API = axios.create({
     // baseURL: "https://foodways.herokuapp.com/api/v1/",
-    baseURL: "https://nishwaysbook.herokuapp.com/api/v1/",
+    baseURL: "https://nishwaysbook.up.railway.app/api/v1/",
     // baseURL: "https://localhost:5000/api/v1/",
 });
 
