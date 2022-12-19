@@ -26,7 +26,7 @@ export default function ProfileEl() {
                 (item) => item.status === "success"
             );
 
-            console.log(filterStatus);
+            //console.log(filterStatus);
             return filterStatus;
         } catch (err) {
             console.log(err)
