@@ -32,7 +32,7 @@ export default function ProfileEl() {
             console.log(err)
         }
     })
-    console.log(transactionData, "current transaction")
+    //console.log(transactionData, "current transaction")
 
     React.useEffect(() => {
         if (state.user) {
